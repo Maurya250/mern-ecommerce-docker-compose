@@ -7,6 +7,8 @@ services:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db
+    networks:
+      - mern-network
 
   backend:
     build:
@@ -20,6 +22,8 @@ services:
       - ./backend/.env
     depends_on:
       - mongo
+    networks:
+      - mern-network
 
   frontend:
     build:
@@ -31,6 +35,12 @@ services:
       - "3000:3000"
     depends_on:
       - backend
+    networks:
+      - mern-network
 
 volumes:
   mongo_data:
+
+networks:
+  mern-network:
+    driver: bridge
